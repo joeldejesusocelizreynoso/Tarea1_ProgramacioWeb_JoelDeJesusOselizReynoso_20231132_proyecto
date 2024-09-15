@@ -1,0 +1,65 @@
+﻿@page "/aprender-mas"
+@rendermode InteractiveServer
+
+<PageTitle>Aprender Más</PageTitle>
+
+@if (mostrarVideo)
+{
+    <p>Se ve el video</p>
+
+    <div class="embed-responsive embed-responsive-16by9" style="max-width:900px;">
+        <iframe class="" style="width:100%; height:600px" src="@urlVideo" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <button class="btn btn-primary" @onclick="()=>mostrarVideo = false">Cerrar Video</button>
+}
+else
+{
+    <h1>Aprende Más</h1>
+
+    <p>En esta sección se encontrará contenido adicional para que puedas aprender más sobre Blazor WebAssembly.</p>
+
+    <div class="row">
+        @foreach (var video in videos)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img onclick="()=>verVideo(video)" class="card-img-top" src="https://i.ytimg.com/vi/@(video.Url)/hqdefault.jpg" />
+                    <div class="card-body">
+                        <h5 class="card-title">@video.Titulo</h5>
+                        <p class="card-text">@video.Descripcion</p>
+                        <a href="https://www.youtube.com/watch?v=@video.Url" target="_blank" class="btn btn-primary">Ver Video</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    bool mostrarVideo = false;
+    string urlVideo = "";
+
+    class Video
+    {
+        public string Titulo { get; set; } = "";
+        public string Descripcion { get; set; } = "";
+        public string Url { get; set; } = "";
+    }
+
+    void verVideo(Video video)
+    {
+        mostrarVideo = true;
+        urlVideo = "https://www.youtube.com/embed/" + video.Url;
+        StateHasChanged();
+    }
+
+    List<Video> videos = new List<Video>
+    {
+        new Video {Titulo = "Qué es Blazor Web Assembly", Descripcion = "Este video trata sobre Blazor Web Assembly. Por cierto, me gustó mucho por el hecho de que habla claramente sobre lo que es esta gran herramienta.", Url = "NFNyXm0JOM4"},
+        new Video {Titulo = "Cómo instalar Blazor Web Assembly", Descripcion = "Este video trata sobre la instalación de Blazor Web Assembly. Inlcuso, me encantó el video porque explica a detalle cómo instarlo paso a paso.", Url = "F6H1q7omPvw"},
+        new Video {Titulo = "Estructura de un proyecto Blazor Web Assembly", Descripcion = "Este video habla sobre la estructura que debe tener un proyecto Blazor Web Assembly. Me pareció excelente porque habla de una parte vital cuando trabajamos con dicha herramienta.", Url = "g9_0BoU4yVk"},
+        new Video {Titulo = "Cómo conectar SQL y Blazor Web Assembly", Descripcion = "Este video trata sobre cómo conectar SQL con Blazor Web Assembly. Es un buen video, ya que nos ayuda establecer una conexión con SQL y Blazor Web Assembly", Url = "K-ZE9czXyx0"},
+        new Video {Titulo = "Comandos SQL para proyectos Blazor Web Assembly", Descripcion = "Este video trata sobre los comandos de Blazor Web Assembly. Este video ha sido maravilloso, porque nos otorga una variedad de comandos esenciales para trabajar con esta herramienta.", Url = "hYtKt2wIMvM"}
+    };
+}

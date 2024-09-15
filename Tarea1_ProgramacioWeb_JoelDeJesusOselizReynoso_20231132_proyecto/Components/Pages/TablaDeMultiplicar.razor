@@ -1,0 +1,27 @@
+﻿@page "/tabla-de-multiplicar"
+@rendermode InteractiveServer
+
+<PageTitle>Tabla de Multiplicar</PageTitle>
+
+<h3>Tabla De Multiplicar</h3>
+
+<p>En este espacio puedes colocar cualquier número y al precionar la tecla enter o al elevar o disminuir los numeros en el lado derecho del input y automaticamente te dará la tabla de dicho número desde el 1 hasta el 15.</p>
+
+<div>
+    <label>Ingrese un Número</label>
+    <input type="number" @bind="numero" class="form-control"/>
+</div>
+
+
+@if (numero > 0)
+{
+    for ( int i = 0; i <= 15; i++ )
+    {
+        <div>@i x @numero = @(i * numero)</div>
+    }
+}
+
+@code {
+    int numero = 0;
+
+}
